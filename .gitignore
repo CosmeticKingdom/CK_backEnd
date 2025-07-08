@@ -1,0 +1,33 @@
+# Gradle
+.gradle/
+build/
+
+# Maven
+target/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Logs
+logs/
+*.log
+*.log.*
+*.trace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Others
+*.jar
+*.war
+*.zip
+*.tar.gz
+/src/main/resources/application*.properties
+/src/main/resources/application*.yml
+!/src/main/resources/application.properties
+!/src/main/resources/application.yml
