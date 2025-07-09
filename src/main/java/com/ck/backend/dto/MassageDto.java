@@ -1,20 +1,13 @@
-package com.ck.backend.entity;
+package com.ck.backend.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "services")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Service {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MassageDto {
     private Long id;
     private String name;
     private String description;

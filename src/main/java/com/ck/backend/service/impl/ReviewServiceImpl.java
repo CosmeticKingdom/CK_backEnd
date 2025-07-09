@@ -3,10 +3,9 @@ package com.ck.backend.service.impl;
 import com.ck.backend.dto.ReviewDto;
 import com.ck.backend.dto.ReviewRequestDto;
 import com.ck.backend.entity.Review;
-import com.ck.backend.entity.Service;
 import com.ck.backend.entity.User;
 import com.ck.backend.repository.ReviewRepository;
-import com.ck.backend.repository.ServiceRepository;
+import com.ck.backend.repository.MassageRepository;
 import com.ck.backend.repository.UserRepository;
 import com.ck.backend.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
-    private final ServiceRepository serviceRepository;
+    private final MassageRepository massageRepository;
 
     @Override
     public ReviewDto createReview(Long userId, Long serviceId, ReviewRequestDto requestDto) {

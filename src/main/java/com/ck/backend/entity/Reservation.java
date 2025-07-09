@@ -4,7 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import com.ck.backend.entity.Massage;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +24,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Service service;
+    private Massage massage;
 
     private LocalDateTime reservationTime;
     private String status; // 예시: 대기중, 확정됨, 취소됨

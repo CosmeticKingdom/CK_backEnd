@@ -4,7 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import com.ck.backend.entity.Massage;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,7 +20,7 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Service service;
+    private Massage massage;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

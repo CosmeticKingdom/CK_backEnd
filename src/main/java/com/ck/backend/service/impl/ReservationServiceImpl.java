@@ -4,11 +4,10 @@ import com.ck.backend.dto.ReservationDto;
 import com.ck.backend.dto.ReservationRequestDto;
 import com.ck.backend.dto.WaitlistRequestDto;
 import com.ck.backend.entity.Reservation;
-import com.ck.backend.entity.Service;
 import com.ck.backend.entity.User;
 import com.ck.backend.entity.Waitlist;
 import com.ck.backend.repository.ReservationRepository;
-import com.ck.backend.repository.ServiceRepository;
+import com.ck.backend.repository.MassageRepository;
 import com.ck.backend.repository.UserRepository;
 import com.ck.backend.repository.WaitlistRepository;
 import com.ck.backend.service.ReservationService;
@@ -25,7 +24,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
-    private final ServiceRepository serviceRepository;
+    private final MassageRepository massageRepository;
     private final WaitlistRepository waitlistRepository;
 
     @Override
