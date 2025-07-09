@@ -8,8 +8,9 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignupRequestDto {
-    private String username;
+    private String loginId;
     private String password;
     private String email;
+    private String role;
     // 회원가입에 필요한 다른 필드 추가
 }

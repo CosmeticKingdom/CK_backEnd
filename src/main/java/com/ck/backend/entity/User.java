@@ -1,42 +1,34 @@
 package com.ck.backend.entity;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
-@Data
+@Table(name = "user")
+@AttributeOverride(name = "id", column = @Column(name = "USER_ID"))
+
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Builder
 @Getter
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(unique = true, nullable = false)
-    private String username;
-    @Column(unique = true, nullable = false)
+@Setter
+public class User extends BaseEntity {
+    @Column(name = "LOGIN_ID", unique = true, nullable = false)
+    private String loginId;
+    @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
-    @Column(nullable = false)
+    @Column(name = "PASSWORD", nullable = false)
     private String password; // 비밀번호
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "ROLE")
     private String role; // e.g., "USER", "ADMIN"
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }

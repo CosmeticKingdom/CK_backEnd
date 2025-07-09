@@ -1,44 +1,35 @@
 package com.ck.backend.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 import com.ck.backend.entity.Massage;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "reservations")
-@Data
+@Table(name = "reservation")
+@AttributeOverride(name = "id", column = @Column(name = "RESERVATION_ID"))
+
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@Getter
+@Builder
+@EqualsAndHashCode(callSuper = true)
+public class Reservation extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "service_id")
+    @JoinColumn(name = "MASSAGES_ID")
     private Massage massage;
 
+    @Column(name = "RESERVATION_TIME")
     private LocalDateTime reservationTime;
+    @Column(name = "STATUS")
     private String status; // 예시: 대기중, 확정됨, 취소됨
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }

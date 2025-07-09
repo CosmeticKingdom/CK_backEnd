@@ -1,34 +1,26 @@
 package com.ck.backend.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "announcements")
-@Data
+@Table(name = "announcement")
+@AttributeOverride(name = "id", column = @Column(name = "ANNOUNCEMENT_ID"))
+
 @NoArgsConstructor
 @AllArgsConstructor
-public class Announcement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Getter
+@Builder
+@EqualsAndHashCode(callSuper = true)
+public class Announcement extends BaseEntity {
+    @Column(name = "TITLE")
     private String title;
+    @Column(name = "CONTENT")
     private String content; // 공지사항 내용
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }

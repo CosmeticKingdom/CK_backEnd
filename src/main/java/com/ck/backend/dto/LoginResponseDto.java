@@ -11,5 +11,6 @@ public class LoginResponseDto {
     private String accessToken;
     private String refreshToken;
     private String message;
+    private String role;
     // 필요한 경우 사용자 세부 정보 추가
 }
