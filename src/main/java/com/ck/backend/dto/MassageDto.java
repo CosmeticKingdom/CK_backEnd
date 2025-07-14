@@ -11,7 +11,7 @@ public class MassageDto {
     private Long id;
     private String name;
     private String description;
-    private double price;
-    private int durationMinutes;
+    private Double price;
+    private Integer durationMinutes;
     // 다른 서비스 관련 필드 추가
 }

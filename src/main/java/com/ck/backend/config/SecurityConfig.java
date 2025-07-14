@@ -4,6 +4,7 @@ import com.ck.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -84,6 +85,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안함
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/auth/**").permitAll() // 회원가입 및 로그인 경로는 모든 사용자에게 허용
+                .requestMatchers(HttpMethod.GET, "/massages/**").permitAll() // 마사지 조회는 모든 사용자에게 허용
                 .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
             )
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가

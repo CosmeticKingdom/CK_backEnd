@@ -10,4 +10,10 @@ public interface MassageService {
     List<MassageDto> getAllMassages();
     // 개별 서비스 상세 조회
     MassageDto getMassageById(Long massageId);
+    // 마사지 생성
+    MassageDto createMassage(MassageDto massageDto);
+    // 마사지 수정
+    MassageDto updateMassage(Long massageId, MassageDto massageDto);
+    // 마사지 삭제
+    void deleteMassage(Long massageId);
 }
