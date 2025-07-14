@@ -29,6 +29,8 @@ public class User extends BaseEntity {
     private String password; // 비밀번호
     @Column(name = "NAME")
     private String name;
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
     @Column(name = "ROLE")
     private String role; // e.g., "USER", "ADMIN"
 }

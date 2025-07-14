@@ -45,6 +45,8 @@ public class AuthServiceImpl implements AuthService {
         User user = new User();
         user.setLoginId(signupRequest.getLoginId());
         user.setEmail(signupRequest.getEmail());
+        user.setName(signupRequest.getName());
+        user.setPhoneNumber(signupRequest.getPhoneNumber());
         // 비밀번호 암호화
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         String role = signupRequest.getRole();

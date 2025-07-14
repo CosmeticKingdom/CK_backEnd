@@ -11,6 +11,8 @@ public class SignupRequestDto {
     private String loginId;
     private String password;
     private String email;
+    private String name;
+    private String phoneNumber;
     private String role;
     // 회원가입에 필요한 다른 필드 추가
 }

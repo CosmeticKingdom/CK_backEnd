@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<UserProfileDto> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> new UserProfileDto(user.getId(), user.getName(), user.getEmail(), user.getRole()))
+                .map(user -> new UserProfileDto(user.getId(), user.getName(), user.getPhoneNumber(), user.getEmail(), user.getRole()))
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService {
     public UserProfileDto getUserById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-        return new UserProfileDto(user.getId(), user.getName(), user.getEmail(), user.getRole());
+        return new UserProfileDto(user.getId(), user.getName(), user.getPhoneNumber(), user.getEmail(), user.getRole());
     }
 
     @Override
@@ -44,11 +44,18 @@ public class AdminServiceImpl implements AdminService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-        user.setName(userProfileUpdateDto.getName());
-        user.setEmail(userProfileUpdateDto.getEmail());
+        if (userProfileUpdateDto.getName() != null) {
+            user.setName(userProfileUpdateDto.getName());
+        }
+        if (userProfileUpdateDto.getEmail() != null) {
+            user.setEmail(userProfileUpdateDto.getEmail());
+        }
+        if (userProfileUpdateDto.getPhoneNumber() != null) {
+            user.setPhoneNumber(userProfileUpdateDto.getPhoneNumber());
+        }
 
         User updatedUser = userRepository.save(user);
-        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getEmail(), updatedUser.getRole());
+        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getPhoneNumber(), updatedUser.getEmail(), updatedUser.getRole());
     }
 
     @Override
@@ -67,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         user.setRole(roleUpdateDto.getRole());
         User updatedUser = userRepository.save(user);
-        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getEmail(), updatedUser.getRole());
+        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getPhoneNumber(), updatedUser.getEmail(), updatedUser.getRole());
     }
 
     // Other AdminService methods (reservations, announcements, etc.) remain as TODOs for now
