@@ -1,11 +1,6 @@
 package com.ck.backend.service;
 
-import com.ck.backend.dto.AdminReservationDto;
-import com.ck.backend.dto.AnnouncementDto;
-import com.ck.backend.dto.AnnouncementRequestDto;
-import com.ck.backend.dto.DashboardStatsDto;
-import com.ck.backend.dto.UserRoleUpdateDto;
-import com.ck.backend.dto.UserProfileDto;
+import com.ck.backend.dto.*;
 import com.ck.backend.entity.Waitlist;
 
 import java.util.List;
@@ -14,22 +9,31 @@ import java.util.List;
 public interface AdminService {
     // 전체 회원 목록 조회
     List<UserProfileDto> getAllUsers();
+
+    // ID로 특정 사용자 조회
+    UserProfileDto getUserById(Long userId);
+
+    // 사용자 정보 업데이트
+    UserProfileDto updateUser(Long userId, UserProfileUpdateDto userProfileUpdateDto);
+
+    // 사용자 삭제
+    void deleteUser(Long userId);
+
     // 회원의 권한 변경
     UserProfileDto updateUserRole(Long userId, UserRoleUpdateDto roleUpdateDto);
+
     // 전체 예약 현황 확인
     List<AdminReservationDto> getAllReservations();
+
     // 개별 예약 승인
     AdminReservationDto approveReservation(Long reservationId);
+
     // 개별 예약 거절
     AdminReservationDto rejectReservation(Long reservationId);
+
     // 대기자 명단 승인
     Waitlist approveWaitlist(Long waitId);
-    // 공지사항 등록
-    AnnouncementDto createAnnouncement(AnnouncementRequestDto requestDto);
-    // 공지사항 수정
-    AnnouncementDto updateAnnouncement(Long announcementId, AnnouncementRequestDto requestDto);
-    // 공지사항 삭제
-    void deleteAnnouncement(Long announcementId);
+
     // 통계 대시보드 조회
     DashboardStatsDto getDashboardStats();
 }

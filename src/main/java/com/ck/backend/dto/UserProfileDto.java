@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserProfileDto {
     private Long id;
-    private String username;
+    private String name;
     private String email;
-    // 다른 사용자 프로필 필드 추가
+    private String role;
 }

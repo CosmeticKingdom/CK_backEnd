@@ -1,47 +1,76 @@
 package com.ck.backend.service.impl;
 
-import com.ck.backend.dto.AdminReservationDto;
-import com.ck.backend.dto.AnnouncementDto;
-import com.ck.backend.dto.AnnouncementRequestDto;
-import com.ck.backend.dto.DashboardStatsDto;
-import com.ck.backend.dto.UserRoleUpdateDto;
-import com.ck.backend.dto.UserProfileDto;
-import com.ck.backend.entity.Announcement;
-import com.ck.backend.entity.Reservation;
+import com.ck.backend.dto.*;
 import com.ck.backend.entity.User;
 import com.ck.backend.entity.Waitlist;
-import com.ck.backend.repository.AnnouncementRepository;
 import com.ck.backend.repository.ReservationRepository;
 import com.ck.backend.repository.UserRepository;
 import com.ck.backend.repository.WaitlistRepository;
 import com.ck.backend.service.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 // 관리자 서비스 구현체
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdminServiceImpl implements AdminService {
 
     private final UserRepository userRepository;
     private final ReservationRepository reservationRepository;
     private final WaitlistRepository waitlistRepository;
-    private final AnnouncementRepository announcementRepository;
 
     @Override
     public List<UserProfileDto> getAllUsers() {
-        // TODO: 전체 회원 목록 조회 로직 구현
-        return null; // 임시 반환값
+        return userRepository.findAll().stream()
+                .map(user -> new UserProfileDto(user.getId(), user.getName(), user.getEmail(), user.getRole()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public UserProfileDto updateUserRole(Long userId, UserRoleUpdateDto roleUpdateDto) {
-        // TODO: 회원의 권한 변경 로직 구현
-        return null; // 임시 반환값
+    public UserProfileDto getUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        return new UserProfileDto(user.getId(), user.getName(), user.getEmail(), user.getRole());
     }
+
+    @Override
+    @Transactional
+    public UserProfileDto updateUser(Long userId, UserProfileUpdateDto userProfileUpdateDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        user.setName(userProfileUpdateDto.getName());
+        user.setEmail(userProfileUpdateDto.getEmail());
+
+        User updatedUser = userRepository.save(user);
+        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getEmail(), updatedUser.getRole());
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found with id: " + userId);
+        }
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    @Transactional
+    public UserProfileDto updateUserRole(Long userId, UserRoleUpdateDto roleUpdateDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        user.setRole(roleUpdateDto.getRole());
+        User updatedUser = userRepository.save(user);
+        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getEmail(), updatedUser.getRole());
+    }
+
+    // Other AdminService methods (reservations, announcements, etc.) remain as TODOs for now
 
     @Override
     public List<AdminReservationDto> getAllReservations() {
@@ -65,23 +94,6 @@ public class AdminServiceImpl implements AdminService {
     public Waitlist approveWaitlist(Long waitId) {
         // TODO: 대기자 명단 승인 로직 구현
         return null; // 임시 반환값
-    }
-
-    @Override
-    public AnnouncementDto createAnnouncement(AnnouncementRequestDto requestDto) {
-        // TODO: 공지사항 등록 로직 구현
-        return null; // 임시 반환값
-    }
-
-    @Override
-    public AnnouncementDto updateAnnouncement(Long announcementId, AnnouncementRequestDto requestDto) {
-        // TODO: 공지사항 수정 로직 구현
-        return null; // 임시 반환값
-    }
-
-    @Override
-    public void deleteAnnouncement(Long announcementId) {
-        // TODO: 공지사항 삭제 로직 구현
     }
 
     @Override

@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserProfileUpdateDto {
-    private String username;
+    private String name;
     private String email;
     // 다른 업데이트 가능한 필드 추가
 }
