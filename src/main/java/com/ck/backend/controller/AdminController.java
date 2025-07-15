@@ -1,6 +1,7 @@
 package com.ck.backend.controller;
 
 import com.ck.backend.dto.*;
+import com.ck.backend.entity.Waitlist;
 import com.ck.backend.service.AdminService;
 import com.ck.backend.service.AnnouncementService;
 import lombok.RequiredArgsConstructor;
@@ -85,5 +86,37 @@ public class AdminController {
     public ResponseEntity<Void> deleteAnnouncement(@PathVariable("id") Long announcementId) {
         announcementService.deleteAnnouncement(announcementId);
         return ResponseEntity.noContent().build();
+    }
+
+    // Reservation Management Endpoints
+    @GetMapping("/reservations")
+    public ResponseEntity<List<AdminReservationDto>> getAllReservations() {
+        List<AdminReservationDto> reservations = adminService.getAllReservations();
+        return ResponseEntity.ok(reservations);
+    }
+
+    @PutMapping("/reservations/{id}/approve")
+    public ResponseEntity<AdminReservationDto> approveReservation(@PathVariable("id") Long reservationId) {
+        AdminReservationDto approvedReservation = adminService.approveReservation(reservationId);
+        return ResponseEntity.ok(approvedReservation);
+    }
+
+    @PutMapping("/reservations/{id}/reject")
+    public ResponseEntity<AdminReservationDto> rejectReservation(@PathVariable("id") Long reservationId) {
+        AdminReservationDto rejectedReservation = adminService.rejectReservation(reservationId);
+        return ResponseEntity.ok(rejectedReservation);
+    }
+
+    // Waitlist Management Endpoints
+    @PutMapping("/waitlist/{id}/approve")
+    public ResponseEntity<Waitlist> approveWaitlist(@PathVariable("id") Long waitId) {
+        Waitlist approvedWaitlist = adminService.approveWaitlist(waitId);
+        return ResponseEntity.ok(approvedWaitlist);
+    }
+
+    @GetMapping("/waitlist")
+    public ResponseEntity<List<Waitlist>> getAllWaitlist() {
+        List<Waitlist> waitlist = adminService.getAllWaitlist();
+        return ResponseEntity.ok(waitlist);
     }
 }

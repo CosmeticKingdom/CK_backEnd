@@ -14,9 +14,9 @@ public interface ReservationService {
     // 사용자 본인의 모든 예약 조회
     List<ReservationDto> getUserReservations(Long userId);
     // 개별 예약 확인
-    ReservationDto getReservationById(Long reservationId);
+    ReservationDto getReservationById(Long reservationId, Long userId);
     // 예약 취소
-    void cancelReservation(Long reservationId);
+    void cancelReservation(Long reservationId, Long userId);
     // 대기자 명단 신청
     Waitlist addToWaitlist(Long userId, WaitlistRequestDto requestDto);
 }

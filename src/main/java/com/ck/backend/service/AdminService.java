@@ -34,6 +34,9 @@ public interface AdminService {
     // 대기자 명단 승인
     Waitlist approveWaitlist(Long waitId);
 
+    // 모든 대기자 명단 조회
+    List<Waitlist> getAllWaitlist();
+
     // 통계 대시보드 조회
     DashboardStatsDto getDashboardStats();
 }

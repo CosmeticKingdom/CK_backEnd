@@ -1,10 +1,6 @@
 package com.ck.backend.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.persistence.*;
 import com.ck.backend.entity.Massage;
@@ -17,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 @EqualsAndHashCode(callSuper = true)
 public class Reservation extends BaseEntity {
@@ -30,6 +27,6 @@ public class Reservation extends BaseEntity {
 
     @Column(name = "RESERVATION_TIME")
     private LocalDateTime reservationTime;
-    @Column(name = "STATUS")
+    @Column(name = "STATUS", nullable = false)
     private String status; // 예시: 대기중, 확정됨, 취소됨
 }

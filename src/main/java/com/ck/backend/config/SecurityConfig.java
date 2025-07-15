@@ -51,7 +51,11 @@ public class SecurityConfig {
                     .map(user -> {
                         logger.info("User found: {}", user.getLoginId());
                         Collection<? extends GrantedAuthority> authorities = Arrays.stream(user.getRole().split(","))
-                                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                                .map(role -> {
+                                    SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_" + role);
+                                    logger.info("Assigning authority for {}: {}", user.getLoginId(), grantedAuthority);
+                                    return grantedAuthority;
+                                })
                                 .collect(Collectors.toList());
                         return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), authorities);
                     })
@@ -86,6 +90,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/auth/**").permitAll() // 회원가입 및 로그인 경로는 모든 사용자에게 허용
                 .requestMatchers(HttpMethod.GET, "/massages/**").permitAll() // 마사지 조회는 모든 사용자에게 허용
+                .requestMatchers("/reservations/**").authenticated() // 예약 관련 경로는 인증 필요
                 .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
             )
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
