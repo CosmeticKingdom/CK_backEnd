@@ -1,2 +1,2 @@
-# CK_frontEnd
-Cosmetic Kingdom 프로젝트의 프론트 입니다.
+# CK_backEnd
+Cosmetic Kingdom 프로젝트의 백엔드입니다.
