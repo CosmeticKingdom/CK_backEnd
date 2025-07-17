@@ -23,24 +23,56 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileDto getUserProfile(Long userId) {
-        // TODO: 사용자 프로필 조회 로직 구현
-        return null; // 임시 반환값
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        return new UserProfileDto(user.getId(), user.getName(), user.getPhoneNumber(), user.getEmail(), user.getRole());
     }
 
     @Override
     public UserProfileDto updateUserProfile(Long userId, UserProfileUpdateDto updateDto) {
-        // TODO: 사용자 프로필 수정 로직 구현
-        return null; // 임시 반환값
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        if (updateDto.getName() != null) {
+            user.setName(updateDto.getName());
+        }
+        if (updateDto.getEmail() != null) {
+            user.setEmail(updateDto.getEmail());
+        }
+        if (updateDto.getPhoneNumber() != null) {
+            user.setPhoneNumber(updateDto.getPhoneNumber());
+        }
+
+        User updatedUser = userRepository.save(user);
+        return new UserProfileDto(updatedUser.getId(), updatedUser.getName(), updatedUser.getPhoneNumber(), updatedUser.getEmail(), updatedUser.getRole());
     }
 
     @Override
     public void deleteUser(Long userId) {
-        // TODO: 사용자 계정 삭제 로직 구현
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found with id: " + userId);
+        }
+        userRepository.deleteById(userId);
     }
 
     @Override
     public UserNotificationSetting updateNotificationSettings(Long userId, NotificationSettingRequestDto settingsDto) {
-        // TODO: 알림 설정 업데이트 로직 구현
-        return null; // 임시 반환값
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        UserNotificationSetting setting = notificationSettingRepository.findByUser(user)
+                .orElseGet(() -> UserNotificationSetting.builder().user(user).build());
+
+        if (settingsDto.getEmailEnabled() != null) {
+            setting.setEmailEnabled(settingsDto.getEmailEnabled());
+        }
+        if (settingsDto.getSmsEnabled() != null) {
+            setting.setSmsEnabled(settingsDto.getSmsEnabled());
+        }
+        if (settingsDto.getPushEnabled() != null) {
+            setting.setPushEnabled(settingsDto.getPushEnabled());
+        }
+
+        return notificationSettingRepository.save(setting);
     }
 }
