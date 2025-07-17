@@ -119,4 +119,11 @@ public class AdminController {
         List<Waitlist> waitlist = adminService.getAllWaitlist();
         return ResponseEntity.ok(waitlist);
     }
+
+    // Dashboard Statistics Endpoint
+    @GetMapping("/dashboard/stats")
+    public ResponseEntity<DashboardStatsDto> getDashboardStats() {
+        DashboardStatsDto stats = adminService.getDashboardStats();
+        return ResponseEntity.ok(stats);
+    }
 }

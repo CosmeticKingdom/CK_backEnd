@@ -1,19 +1,17 @@
 package com.ck.backend.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class DashboardStatsDto {
-    private Long totalUsers;
-    private Long totalReservations;
-    private Double totalRevenue;
-    private Map<String, Long> userRegistrationTrend; // e.g., daily/monthly counts
-    private Map<String, Long> reservationStatusCounts; // e.g., CONFIRMED: 100, PENDING: 20
-    // 기타 관련 통계 추가
+    private long totalUsers;
+    private long totalReservations;
+    private double totalRevenue;
+    private double dailyRevenue;
+    private double monthlyRevenue;
+    // 필요에 따라 다른 통계 지표 추가
 }

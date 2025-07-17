@@ -22,4 +22,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByStatusAndReservationTimeBetween(String status, LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     List<Reservation> findByUserIdAndMassageId(Long userId, Long massageId);
+
+    List<Reservation> findByStatus(String status);
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -160,8 +161,30 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public DashboardStatsDto getDashboardStats() {
-        // TODO: 통계 대시보드 조회 로직 구현
-        return null; // 임시 반환값
+        long totalUsers = userRepository.count();
+        long totalReservations = reservationRepository.count();
+
+        // 총 매출 계산 (CONFIRMED 상태의 예약만 포함)
+        double totalRevenue = reservationRepository.findByStatus("CONFIRMED").stream()
+                .mapToDouble(reservation -> reservation.getMassage().getPrice())
+                .sum();
+
+        // 일별 매출 계산
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfDay = now.toLocalDate().atStartOfDay();
+        LocalDateTime endOfDay = now.toLocalDate().atTime(23, 59, 59, 999999999);
+        double dailyRevenue = reservationRepository.findByStatusAndReservationTimeBetween("CONFIRMED", startOfDay, endOfDay).stream()
+                .mapToDouble(reservation -> reservation.getMassage().getPrice())
+                .sum();
+
+        // 월별 매출 계산
+        LocalDateTime startOfMonth = now.withDayOfMonth(1).toLocalDate().atStartOfDay();
+        LocalDateTime endOfMonth = now.withDayOfMonth(now.toLocalDate().lengthOfMonth()).toLocalDate().atTime(23, 59, 59, 999999999);
+        double monthlyRevenue = reservationRepository.findByStatusAndReservationTimeBetween("CONFIRMED", startOfMonth, endOfMonth).stream()
+                .mapToDouble(reservation -> reservation.getMassage().getPrice())
+                .sum();
+
+        return new DashboardStatsDto(totalUsers, totalReservations, totalRevenue, dailyRevenue, monthlyRevenue);
     }
 
     @Override

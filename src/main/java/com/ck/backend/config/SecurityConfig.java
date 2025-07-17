@@ -92,6 +92,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/massages/**").permitAll() // 마사지 조회는 모든 사용자에게 허용
                 .requestMatchers("/reservations/**").authenticated() // 예약 관련 경로는 인증 필요
                 .requestMatchers(HttpMethod.POST, "/services/{serviceId}/reviews").hasRole("USER")
+                .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 경로는 ADMIN 역할만 허용
                 .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
             )
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
