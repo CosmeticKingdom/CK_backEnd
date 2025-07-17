@@ -20,4 +20,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     // 주어진 시간 범위 내의 CONFIRMED 상태 예약 찾기 (정확한 충돌 검사는 서비스 레이어에서)
     List<Reservation> findByStatusAndReservationTimeBetween(String status, LocalDateTime startOfDay, LocalDateTime endOfDay);
+
+    List<Reservation> findByUserIdAndMassageId(Long userId, Long massageId);
 }

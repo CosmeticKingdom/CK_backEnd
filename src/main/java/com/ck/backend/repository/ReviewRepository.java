@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     // 서비스 ID로 후기 목록 찾기
+    List<Review> findByMassageId(Long massageId);
 }

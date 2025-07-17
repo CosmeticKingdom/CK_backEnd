@@ -14,7 +14,7 @@ public class ReviewDto {
     private Long serviceId;
     private Long userId;
     private String comment;
-    private int rating;
+    private double rating;
     private LocalDateTime createdAt;
     // 다른 후기 세부 정보 추가
 }

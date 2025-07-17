@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 import com.ck.backend.entity.Massage;
+import com.ck.backend.util.Rating;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,5 +33,6 @@ public class Review extends BaseEntity {
     @Column(name = "COMMENT")
     private String comment;
     @Column(name = "RATING")
-    private int rating; // 평점 (예: 1-5점)
+    @Enumerated(EnumType.STRING)
+    private Rating rating; // 평점 (예: 1-5점)
 }
